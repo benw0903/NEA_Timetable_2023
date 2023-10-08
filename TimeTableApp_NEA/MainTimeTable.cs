@@ -93,10 +93,8 @@ Press any key to enter.");
             int[,] times = new int[numColumns, numRows];
             ActivitiesAndTimes[,] activities = new ActivitiesAndTimes[numColumns, numRows];
 
-            int count1 = 0;
-            int count2 = 0;
-            int count3 = 0;
-            int count4 = 0;
+            int count1 = 0,count2 = 0, count3 = 0, count4 = 0;
+
 
             for (int i = 0; i < numColumns * numRows; i++)
             {
@@ -135,12 +133,97 @@ Press any key to enter.");
 
         static void FileName()
         {
-            Console.WriteLine("Enter in the date. (dd/mm/yyyy)");
+            DateTime currentTime = DateTime.Now;
+
+            Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in the date (dd/mm/yyyy).");
             string filename = Console.ReadLine();
 
-            string day = filename.Substring(0,2);
-            string month = filename.Substring(3,2);
-            Console.WriteLine(day + month);
+            string currentTimeString = currentTime.ToString();
+            // Make the current time into a string
+            
+            string currentDayString = currentTimeString.Substring(0, 2),currentMonthString = currentTimeString.Substring(3, 2),currentYearString = currentTimeString.Substring(6, 5);
+            int currentDayInt = int.Parse(currentDayString), currentMonthInt = int.Parse(currentMonthString), currentYearInt = int.Parse(currentYearString);
+            // Converting the current date into induvidual days months and years
+
+
+            string dayString = filename.Substring(0, 2), monthString = filename.Substring(3, 2), YearString = filename.Substring(6, 4);           
+
+            int dayInt = int.Parse(dayString), monthInt = int.Parse(monthString), yearInt = int.Parse(YearString);
+            // Converting the inputed date into induvidual days months and years
+
+            while (dayInt > 31 && monthInt > 12 || dayInt < 1 && monthInt < 1)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a valid date (dd/mm/yyyy)."); ;
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+
+            }
+
+            while (dayInt > 31 && monthInt == 1 || dayInt > 28 && monthInt == 2 || dayInt > 31 && monthInt == 3)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a valid date (dd/mm/yyyy).");
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+
+            }
+            //Days for jan,feb,march 
+
+            while (dayInt > 30 && monthInt == 4 || dayInt > 31 && monthInt == 5 || dayInt > 30 && monthInt == 6)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a valid date (dd/mm/yyyy).");
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+            }
+            //Days for april,may,june
+
+            while (dayInt > 31 && monthInt == 7 || dayInt > 31 && monthInt == 8 || dayInt > 30 && monthInt == 9)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a valid date (dd/mm/yyyy).");
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+            }
+            //Days for july,Aug,Sep
+
+            while (dayInt > 31 && monthInt == 10 || dayInt > 30 && monthInt == 11 || dayInt > 31 && monthInt == 12)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a valid date (dd/mm/yyyy).");
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+            }
+            //Days for oct,nov,dec
+
+            while(currentDayInt - dayInt >=0 && currentMonthInt - monthInt >= 0 && currentYearInt - yearInt >= 0)
+            {
+                Console.Clear();
+                Console.WriteLine(@"The current Date and Time is: " + currentTime +
+". Enter in a future or current date (dd/mm/yyyy).");
+                filename = Console.ReadLine();
+
+                dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
+                dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
+            }
+            Console.WriteLine(filename);
             Console.ReadKey();
         }
 
