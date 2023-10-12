@@ -21,22 +21,26 @@ namespace TimeTableApp_NEA
 
     class CreateFile
     {
-
-        public void FileName(string fileName)
+        public void Create(string fileName)
         {
             try
             {
-                using (StreamWriter writer = File.CreateText(fileName))
+                string fileExtension = ".txt";
+                string fullFilePath = fileName + fileExtension;
+
+
+                using (FileStream fileStream = File.Open(fullFilePath, FileMode.OpenOrCreate))
                 {
-                    writer.WriteLine("This is a sample file.");
+
                 }
+
                 Console.Clear();
-                Console.WriteLine("File '{filename}' created successfully.");
+                Console.WriteLine("File " + fullFilePath + " created or opened successfully.");
             }
             catch (Exception error)
             {
                 Console.Clear();
-                Console.WriteLine("Error creating the file: {error.Message}");
+                Console.WriteLine("Error creating or opening the file: " + error.Message);
             }
         }
     }
@@ -100,7 +104,7 @@ namespace TimeTableApp_NEA
         }
 
 
-        public void Activitiesibput(int rows, int columns, string value)
+        public void ActivitiesInput(int rows, int columns, string value)
         {
             if (rows >= 0 && rows < activities.GetLength(0) && columns >= 0 && columns < activities.GetLength(1))
             {

@@ -86,68 +86,102 @@ Press any key to enter.");
             }
         }
 
+        static void block()
+        {
+            string fileName = FileName();
+            CreateFile createFile = new CreateFile();
+            createFile.Create(fileName);
+            // Name for the files sent to CreateFile
+        }
+
         static void ActivitiesAndTime(int numColumns, int numRows)
         {
             Console.Clear();
 
-            int[,] times = new int[numColumns, numRows];
+
             ActivitiesAndTimes[,] activities = new ActivitiesAndTimes[numColumns, numRows];
-
-            int count1 = 0,count2 = 0, count3 = 0, count4 = 0;
-
+            int[,] minutes = new int[numColumns, numRows];
+            int[,] hours = new int[numColumns, numRows];
+            int count1 = 0, count2 = 0;
 
             for (int i = 0; i < numColumns * numRows; i++)
             {
+                Console.Clear();
 
-                Console.WriteLine("Enter a the hour of the activity will take place. 0-23");
-                if (int.Parse(Console.ReadLine()) >= 0 && int.Parse(Console.ReadLine()) <= 23)
+                Console.WriteLine("Enter the hour the activity will take place. 0-23");
+                hours[count1, count2] = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter the minute of the hour the activity will take place. 0-59");
+                minutes[count1, count2] = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Are you happy with the times your picked? (Yes/No)");
+                string option = Console.ReadLine();
+
+
+                while (option != "Yes" || minutes[count1, count2] > 59 && hours[count1, count2] < 0 || hours[count1, count2] > 23 && hours[count1, count2] < 0)
                 {
-                    //link this with ActivitiesAndTime
+                    Console.Clear();
+                    if (option != "Yes")
+                    {
+                        Console.WriteLine("Please enter an Hour between 0-23.");
+                    }
+                    if(minutes[count1, count2] > 59 && hours[count1, count2] < 0 || hours[count1, count2] > 23 && hours[count1, count2] < 0)
+                    {
+                        Console.WriteLine("Invalid input. Please enter an Hour between 0-23.");
+                    }
+
+                    Console.WriteLine("Enter the hour the activity will take place. 0-23");
+                    hours[count1, count2] = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter the minute of the hour the activity will take place. 0-59");
+                    minutes[count1, count2] = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Are you happy with the times your picked? (Yes/No)");
+                    option = Console.ReadLine();
                 }
-                else
+                
+
+                if (hours[count1, count2] < 24 || minutes[count1, count2] < 60 && hours[count1, count2] >= 0 || minutes[count1, count2] >= 0)
                 {
-                    Console.WriteLine("Invalid input.PLease enter an Hour between 0-23.");
-                    i--;
+                    activities.HoursValue(count2, count1, hours[count1, count2]);
                 }
-                count1++;
-                if (count1 == numRows)
+
+                for (int f = 0; f < numColumns * numRows; f++)
                 {
-                    count2++;
-                    count1 = 0;
+                    Console.Clear();
+                    Console.WriteLine("Enter the activity for the time your have chosen.");
+
+
+                    while (option != "Yes")
+                    {
+                        Console.Clear();
+                        if (option != "Yes")
+                        {
+                            Console.WriteLine("Please enter an Hour between 0-23.");
+                        }
+                    }
                 }
-
-
-
             }
-            for (int i = 0; i < numColumns * numRows; i++)
-            {
-                Console.WriteLine("Enter the activity for");
-                count3++;
-                if (count3 == numRows)
-                {
-                    count4++;
-                    count3 = 0;
-                }
-            }
+
         }
 
-        static void FileName()
+        static string FileName()
         {
             DateTime currentTime = DateTime.Now;
 
             Console.WriteLine(@"The current Date and Time is: " + currentTime +
-". Enter in the date (dd/mm/yyyy).");
+". Enter in the starting day of your week. (dd/mm/yyyy).");
             string filename = Console.ReadLine();
 
             string currentTimeString = currentTime.ToString();
             // Make the current time into a string
-            
-            string currentDayString = currentTimeString.Substring(0, 2),currentMonthString = currentTimeString.Substring(3, 2),currentYearString = currentTimeString.Substring(6, 5);
+
+            string currentDayString = currentTimeString.Substring(0, 2), currentMonthString = currentTimeString.Substring(3, 2), currentYearString = currentTimeString.Substring(6, 5);
             int currentDayInt = int.Parse(currentDayString), currentMonthInt = int.Parse(currentMonthString), currentYearInt = int.Parse(currentYearString);
             // Converting the current date into induvidual days months and years
 
 
-            string dayString = filename.Substring(0, 2), monthString = filename.Substring(3, 2), YearString = filename.Substring(6, 4);           
+            string dayString = filename.Substring(0, 2), monthString = filename.Substring(3, 2), YearString = filename.Substring(6, 4);
 
             int dayInt = int.Parse(dayString), monthInt = int.Parse(monthString), yearInt = int.Parse(YearString);
             // Converting the inputed date into induvidual days months and years
@@ -213,7 +247,7 @@ Press any key to enter.");
             }
             //Days for oct,nov,dec
 
-            while(currentDayInt - dayInt >=0 && currentMonthInt - monthInt >= 0 && currentYearInt - yearInt >= 0)
+            while (currentDayInt - dayInt >= 0 && currentMonthInt - monthInt >= 0 && currentYearInt - yearInt >= 0)
             {
                 Console.Clear();
                 Console.WriteLine(@"The current Date and Time is: " + currentTime +
@@ -223,8 +257,9 @@ Press any key to enter.");
                 dayString = filename.Substring(0, 2); monthString = filename.Substring(3, 2); YearString = filename.Substring(6, 4);
                 dayInt = int.Parse(dayString); monthInt = int.Parse(monthString); yearInt = int.Parse(YearString);
             }
-            Console.WriteLine(filename);
-            Console.ReadKey();
+            Console.WriteLine(filename + " is a valid date");
+            return filename;
+
         }
 
 
